@@ -229,10 +229,10 @@ export const CardPreview: React.FC<CardPreviewProps> = ({
           <div 
             className="card-content"
             style={{
-              fontSize: '26px',
+              fontSize: '22px',
               textAlign: 'center',
               textShadow: textShadow,
-              lineHeight: '1.4',
+              lineHeight: '1.3',
               padding: '0 20px',
               flex: '1',
               display: 'flex',

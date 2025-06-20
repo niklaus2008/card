@@ -39,4 +39,4 @@ coverage/
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp .specstory/history/2025-06-20_04-33-vercel-deployment-build-errors.md

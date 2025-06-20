@@ -141,15 +141,21 @@ export const InputForm: React.FC<InputFormProps> = ({
         <textarea
           className="input-enhanced w-full min-h-[100px] rounded-xl placeholder-dark-enhanced resize-none"
           rows={3}
-          placeholder="输入您的金句内容，或点击上方按钮生成..."
+          placeholder="输入您的金句内容，或点击上方按钮生成...（建议80字以内，避免文字压盖）"
           value={localContent}
           onChange={handleContentChange}
           disabled={isLoading}
-          maxLength={200}
+          maxLength={80}
         />
-        <div className="flex justify-end items-center text-xs">
-          <span className="counter-enhanced">
-            {localContent.length}/200 字符
+        <div className="flex justify-between items-center text-xs">
+          {/* 字数警告提示 */}
+          {localContent.length > 60 && (
+            <span className="text-yellow-300 text-xs">
+              ⚠️ 内容较长，可能影响卡片显示效果
+            </span>
+          )}
+          <span className="counter-enhanced ml-auto">
+            {localContent.length}/80 字符
           </span>
         </div>
       </div>

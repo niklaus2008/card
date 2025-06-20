@@ -300,7 +300,8 @@ export class CardGenerator {
    */
   private drawQuote(content: string, width: number, height: number, theme: CardTheme): void {
     this.ctx.fillStyle = this.getTextColor(theme);
-    this.ctx.font = '32px PingFang SC, Microsoft YaHei, SimHei, Arial, sans-serif';
+    // 优化字体大小，从32px调整为28px，减少文字压盖
+    this.ctx.font = '28px PingFang SC, Microsoft YaHei, SimHei, Arial, sans-serif';
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'middle';
 
@@ -311,11 +312,12 @@ export class CardGenerator {
     this.ctx.shadowOffsetX = 1;
     this.ctx.shadowOffsetY = 1;
 
-    // 文字换行处理 - 优化行间距
+    // 文字换行处理 - 优化行间距，从45px调整为40px
     const maxWidth = width * 0.85;
     const lines = this.wrapText(content, maxWidth);
-    const lineHeight = 45;
-    const startY = height * 0.55 - (lines.length - 1) * lineHeight / 2;
+    const lineHeight = 40;
+    // 调整起始位置，确保文字在合适区域显示
+    const startY = height * 0.52 - (lines.length - 1) * lineHeight / 2;
 
     lines.forEach((line, index) => {
       this.ctx.fillText(line, width / 2, startY + index * lineHeight);

@@ -316,6 +316,18 @@ class SiliconFlowService {
   }
 
   /**
+   * 检测文本是否包含中文
+   * @param {string} text - 要检测的文本
+   * @returns {boolean} 是否包含中文
+   * @private
+   */
+  private isChinese(text: string): boolean {
+    // 只要包含任何一个中文字符，就认为是中文文本
+    const chineseRegex = /[\u4e00-\u9fa5]/;
+    return chineseRegex.test(text);
+  }
+
+  /**
    * 生成指定主题的金句
    * @param {CardTheme} theme - 金句主题，默认为励志类
    * @returns {Promise<string>} 生成的金句内容
@@ -323,11 +335,11 @@ class SiliconFlowService {
   async generateQuote(theme: CardTheme = CardTheme.INSPIRATIONAL): Promise<string> {
     try {
       const prompts = {
-        [CardTheme.INSPIRATIONAL]: '请生成一句励志名言或金句，要求简洁有力，能够激励人心。请直接输出具体的金句和真实出处，用"—"分隔。',
-        [CardTheme.PHILOSOPHICAL]: '请生成一句哲理名言或智慧语录，要求有深度，能够引发思考。请直接输出具体的金句和真实出处，用"—"分隔。',
-        [CardTheme.EMOTIONAL]: '请生成一句温暖治愈的情感金句，要求能够打动人心，传递正能量。请直接输出具体的金句和真实出处，用"—"分隔。',
-        [CardTheme.LIFE]: '请生成一句关于生活的智慧语录，要求贴近日常，有实用价值。请直接输出具体的金句和真实出处，用"—"分隔。',
-        [CardTheme.WISDOM]: '请生成一句古今中外的智慧名言，要求经典深刻，有教育意义。请直接输出具体的金句和真实出处，用"—"分隔。'
+        [CardTheme.INSPIRATIONAL]: '请生成一句励志名言或金句，要求简洁有力，能够激励人心。请直接输出具体的金句和真实出处，用"—"分隔。必须使用中文。',
+        [CardTheme.PHILOSOPHICAL]: '请生成一句哲理名言或智慧语录，要求有深度，能够引发思考。请直接输出具体的金句和真实出处，用"—"分隔。必须使用中文。',
+        [CardTheme.EMOTIONAL]: '请生成一句温暖治愈的情感金句，要求能够打动人心，传递正能量。请直接输出具体的金句和真实出处，用"—"分隔。必须使用中文。',
+        [CardTheme.LIFE]: '请生成一句关于生活的智慧语录，要求贴近日常，有实用价值。请直接输出具体的金句和真实出处，用"—"分隔。必须使用中文。',
+        [CardTheme.WISDOM]: '请生成一句古今中外的智慧名言，要求经典深刻，有教育意义。请直接输出具体的金句和真实出处，用"—"分隔。必须使用中文。'
       };
 
       const requestData: SiliconFlowRequest = {
@@ -342,7 +354,45 @@ class SiliconFlowService {
         temperature: 0.8
       };
 
-      return await this.makeApiRequest(requestData);
+      // 最多重试3次，确保生成中文金句
+      let attempts = 0;
+      const maxAttempts = 3;
+      
+      while (attempts < maxAttempts) {
+        try {
+          const result = await this.makeApiRequest(requestData);
+          
+          // 解析金句内容
+          const { quote } = this.parseQuoteAndSource(result);
+          
+          // 检测是否为中文
+          if (this.isChinese(quote)) {
+            console.log(`✅ 成功生成中文金句 (第${attempts + 1}次尝试):`, quote);
+            return result;
+          } else {
+            console.log(`⚠️ 检测到非中文金句 (第${attempts + 1}次尝试):`, quote);
+            attempts++;
+            
+            // 如果不是最后一次尝试，修改提示词增强中文要求
+            if (attempts < maxAttempts) {
+              requestData.messages[0].content = prompts[theme] + ` 注意：必须生成中文金句，不能使用英文或其他语言。`;
+              // 稍微增加随机性，确保temperature存在
+              if (requestData.temperature !== undefined) {
+                requestData.temperature = Math.min(0.9, requestData.temperature + 0.1);
+              }
+            }
+          }
+        } catch (error) {
+          console.error(`第${attempts + 1}次生成金句失败:`, error);
+          attempts++;
+        }
+      }
+      
+      // 如果3次都失败，使用默认中文金句
+      console.log('🔄 AI生成失败或非中文，使用默认中文金句');
+      const defaultQuote = this.getDefaultQuote(theme);
+      return defaultQuote.content;
+      
     } catch (error) {
       console.error('AI生成金句失败，使用默认金句:', error);
       // AI生成失败时，返回默认金句
@@ -384,19 +434,32 @@ class SiliconFlowService {
     
     if (dashIndex !== -1) {
       const quote = cleanedContent.substring(0, dashIndex).trim();
-      const source = cleanedContent.substring(dashIndex + 1).trim(); // 移除破折号前缀
+      let source = cleanedContent.substring(dashIndex + 1).trim();
+      
+      // 清理来源部分的前缀符号和多余空格
+      source = source
+        .replace(/^[—\-\s]+/, '')  // 移除开头的破折号和空格
+        .replace(/^["'「『《]/, '')  // 移除开头的引号
+        .replace(/["'」』》]$/, '')  // 移除结尾的引号
+        .trim();
+      
+      // 如果来源为空，使用默认来源
+      if (!source) {
+        source = '智慧语录';
+      }
+      
       return { quote, source };
     }
     
     // 如果没有找到分隔符，返回默认格式
     return {
       quote: cleanedContent,
-      source: '智慧语录' // 移除破折号前缀
+      source: '智慧语录'
     };
   }
 
   /**
-   * 移除文本中所有括号内的说明性内容和破折号分隔符
+   * 移除文本中所有括号内的说明性内容
    * @param {string} text - 原始文本
    * @returns {string} 清理后的文本
    * @private
@@ -426,11 +489,7 @@ class SiliconFlowService {
       cleanedText = cleanedText.replace(pattern, '');
     });
     
-    // 移除破折号分隔符及其后面的内容（确保编辑框中不出现破折号）
-    const dashIndex = cleanedText.indexOf('—');
-    if (dashIndex !== -1) {
-      cleanedText = cleanedText.substring(0, dashIndex).trim();
-    }
+    // 注意：不要在这里移除破折号分隔符，因为parseQuoteAndSource方法需要它来分离金句和来源
     
     // 清理多余的空格和标点
     cleanedText = cleanedText
