@@ -1,0 +1,351 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 基础重置 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 毛玻璃效果 */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 标签样式 */
+.label-enhanced {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 8px 16px !important;
+  border-radius: 12px !important;
+  display: inline-block !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 文字样式 */
+.text-label-soft {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+  font-weight: 600 !important;
+}
+
+.text-white-enhanced {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+  font-weight: 600 !important;
+}
+
+.text-dark-enhanced {
+  color: #111827 !important;
+  font-weight: 700 !important;
+}
+
+/* 输入框样式 */
+.input-enhanced {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  color: #111827 !important;
+}
+
+.input-enhanced:focus {
+  background: rgba(255, 255, 255, 1) !important;
+  border-color: #8B5CF6 !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3) !important;
+}
+
+.placeholder-dark-enhanced::placeholder {
+  color: rgba(75, 85, 99, 0.7) !important;
+  font-weight: 500 !important;
+}
+
+/* 计数器样式 */
+.counter-enhanced {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  padding: 6px 12px !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 600 !important;
+}
+
+/* 按钮样式 */
+.btn-primary-enhanced {
+  background: linear-gradient(135deg, #8B5CF6, #A855F7) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-primary-enhanced:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 35px rgba(139, 92, 246, 0.4) !important;
+}
+
+.btn-text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+}
+
+/* 卡片预览样式 */
+.card-preview {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 30px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-preview:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* 主题样式 */
+.card-theme-classic {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card-theme-sunset {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+}
+
+.card-theme-ocean {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card-theme-forest {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.card-theme-galaxy {
+  background: linear-gradient(135deg, #2c3e50 0%, #4a00e0 100%);
+}
+
+.card-theme-aurora {
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+}
+
+/* 导出样式 */
+.card-export {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  border-radius: 20px !important;
+  padding: 40px !important;
+  color: white !important;
+  width: 400px !important;
+  height: 600px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.card-export.card-theme-classic {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.card-export.card-theme-sunset {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%) !important;
+}
+
+.card-export.card-theme-ocean {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.card-export.card-theme-forest {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+}
+
+.card-export.card-theme-galaxy {
+  background: linear-gradient(135deg, #2c3e50 0%, #4a00e0 100%) !important;
+}
+
+.card-export.card-theme-aurora {
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%) !important;
+}
+
+/* 响应式卡片尺寸系统 */
+.card-size-small {
+  width: 300px !important;
+  height: 400px !important;
+  padding: 25px !important;
+}
+
+.card-size-medium {
+  width: 400px !important;
+  height: 600px !important;
+  padding: 40px !important;
+}
+
+.card-size-large {
+  width: 500px !important;
+  height: 750px !important;
+  padding: 50px !important;
+}
+
+/* 动态字体系统 - 基于黄金比例，优化显示效果 */
+.text-dynamic-small {
+  font-size: clamp(1.4rem, 3vw, 2rem) !important;
+  line-height: 1.3 !important;
+  max-height: none !important;
+}
+
+.text-dynamic-medium {
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem) !important;
+  line-height: 1.4 !important;
+  max-height: none !important;
+}
+
+.text-dynamic-large {
+  font-size: clamp(0.95rem, 2vw, 1.3rem) !important;
+  line-height: 1.5 !important;
+  max-height: none !important;
+}
+
+/* 作者文字动态调整 */
+.author-dynamic-small {
+  font-size: clamp(1rem, 1.8vw, 1.3rem) !important;
+  margin-top: clamp(20px, 3vw, 30px) !important;
+}
+
+.author-dynamic-medium {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem) !important;
+  margin-top: clamp(15px, 2.5vw, 25px) !important;
+}
+
+.author-dynamic-large {
+  font-size: clamp(0.8rem, 1.3vw, 1rem) !important;
+  margin-top: clamp(12px, 2vw, 18px) !important;
+}
+
+/* 日期文字动态调整 */
+.date-dynamic-small {
+  font-size: clamp(0.9rem, 1.6vw, 1.1rem) !important;
+}
+
+.date-dynamic-medium {
+  font-size: clamp(0.8rem, 1.4vw, 1rem) !important;
+}
+
+.date-dynamic-large {
+  font-size: clamp(0.7rem, 1.2vw, 0.9rem) !important;
+}
+
+/* 卡片内容区域优化 - 更灵活的布局 */
+.card-content-adaptive {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  height: 100% !important;
+  text-align: center !important;
+  position: relative !important;
+  min-height: 0 !important;
+}
+
+/* 文字溢出处理 - 更宽松的限制 */
+.text-overflow-ellipsis {
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
+}
+
+.text-overflow-3-lines {
+  -webkit-line-clamp: 4 !important;
+}
+
+.text-overflow-4-lines {
+  -webkit-line-clamp: 5 !important;
+}
+
+.text-overflow-5-lines {
+  -webkit-line-clamp: 7 !important;
+}
+
+/* 尺寸选择器样式 */
+.size-selector {
+  display: flex !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+.size-option {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  color: white !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+}
+
+.size-option:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+.size-option.active {
+  background: rgba(139, 92, 246, 0.8) !important;
+  border-color: rgba(139, 92, 246, 1) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4) !important;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .card-size-small {
+    width: 280px !important;
+    height: 380px !important;
+    padding: 20px !important;
+  }
+  
+  .card-size-medium {
+    width: 320px !important;
+    height: 480px !important;
+    padding: 30px !important;
+  }
+  
+  .card-size-large {
+    width: 360px !important;
+    height: 540px !important;
+    padding: 35px !important;
+  }
+} 

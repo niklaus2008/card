@@ -1,0 +1,1 @@
+export { QuoteAnalysis } from './QuoteAnalysis'; 
