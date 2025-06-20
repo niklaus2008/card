@@ -82,12 +82,7 @@ const App: React.FC = () => {
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
           📸 精美卡片生成器
         </h1>
-        <div className="flex justify-center gap-4 text-xs text-white/70">
-          <span>✨ 6种精美主题</span>
-          <span>🎨 实时预览</span>
-          <span>📱 高清下载</span>
-          {isAIConfigured && <span>🤖 AI智能生成</span>}
-        </div>
+        
       </header>
 
       {/* 主要内容区域 - 减少padding */}
@@ -176,7 +171,6 @@ const App: React.FC = () => {
       {/* 底部版权信息 - 减少padding */}
       <footer className="text-center py-2 text-white/60">
         <p className="text-sm">© 2025 精美卡片生成器 - 让每一句话都有美好呈现</p>
-        <p className="text-xs mt-1">预览即所得，下载效果与预览完全一致</p>
       </footer>
     </div>
   );

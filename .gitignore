@@ -30,6 +30,8 @@ dist-ssr
 .env.test.local
 .env.production.local
 
+.specstory/*
+
 # Build outputs
 dist/
 build/
@@ -40,3 +42,5 @@ coverage/
 # Temporary files
 *.tmp
 *.temp .specstory/history/2025-06-20_04-33-vercel-deployment-build-errors.md
+
+
