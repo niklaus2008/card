@@ -170,7 +170,7 @@ const App: React.FC = () => {
 
       {/* 底部版权信息 - 减少padding */}
       <footer className="text-center py-2 text-white/60">
-        <p className="text-sm">© 2025 精美卡片生成器 - 让每一句话都有美好呈现</p>
+        <p className="text-sm">© 强哥的 精美卡片生成器 - 让每一句话都有美好呈现</p>
       </footer>
     </div>
   );
